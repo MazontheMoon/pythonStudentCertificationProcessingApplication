@@ -36,15 +36,33 @@ def getValidIntInput(message):
             print("Invalid Entry, please try again. \n")
 
 # Calculate grade
+def getGrade(score):
+    if score >= 70:
+        return "A"
+    elif score >= 60:
+        return "B"
+    elif score >= 50:
+        return "C"
+    elif score >= 40:
+        return "D"
+    else:
+        return "E"
 
-# Calculate average result
+# Calculate outcome from result
+def getOutcome(grade):
+    if grade == "A" or grade == "B" or grade == "C":
+        return "Pass"
+    else:
+        return "Fail"
 
-# Calculate result
-
-# Display results
-
+# Display Grade
+def displayGrade(list):
+    if list[][]
+    
 # Generate certificate
-
+def generateCertificate(list):
+    print("======================================================================")
+    
 # Write to log file
 
 # Write to CSV
@@ -80,6 +98,9 @@ def main():
     studentname = ""
     certificateName = ""
     resultList = [0] * len(moduleList)
+    gradeList = [0] * len(moduleList)
+    outcomeList = [0] * len(moduleList)
+    certificateList = []
 
     # Display greeting
     displayGreeting()
@@ -92,12 +113,33 @@ def main():
         # Get results per module
         for i in range(0, len(moduleList)):
             resultList[i] = getValidIntInput("Enter result for module '" + moduleList[i] + "': ")
+            gradeList[i] = getGrade(resultList[i])
+            outcomeList[i] = getOutcome(gradeList[i])
+
+        certificateList.append(studentname)
+        certificateList.append(certificateName)
+        certificateList.append(resultList)
+        certificateList.append(gradeList)
+        certificateList.append(outcomeList)
 
         # Display grade
-        print(resultList)
+        displayGrade(certificateList)
 
-        #Prompt to exit
+        # Generate certificate
+        generateCertificate(certificateList)
+
+        # Add to log
+
+        # Add to CSV
+
+        # Prompt to exit
         keepGoing = exitPrompt()
+
+        # Clear lists
+        resultList.clear()
+        gradeList.clear()
+        outcomeList.clear()
+        certificateList.clear()
         
     displayExitMessage()
     
