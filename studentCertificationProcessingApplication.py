@@ -57,7 +57,14 @@ def getOutcome(grade):
 
 # Display Grade
 def displayGrade(list):
-    if list[][]
+    grade = ""
+    
+    if "Fail" in list[4]:
+        grade = "Fail"
+    else :
+        grade = "Pass"
+    print("{0} has achieved a grade of {1} for the certificate: {2}".format(list[0], grade.upper(), list[1]))
+
     
 # Generate certificate
 def generateCertificate(list):
@@ -95,7 +102,7 @@ def main():
 
     # Local variables
     keepGoing = True
-    studentname = ""
+    studentName = ""
     certificateName = ""
     resultList = [0] * len(moduleList)
     gradeList = [0] * len(moduleList)
@@ -116,7 +123,7 @@ def main():
             gradeList[i] = getGrade(resultList[i])
             outcomeList[i] = getOutcome(gradeList[i])
 
-        certificateList.append(studentname)
+        certificateList.append(studentName)
         certificateList.append(certificateName)
         certificateList.append(resultList)
         certificateList.append(gradeList)
