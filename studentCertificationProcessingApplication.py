@@ -11,7 +11,7 @@ moduleList = ["System Design", "Web Design", "Programming", "Databases", "Cyber 
 # Display message
 def displayMessage(message):
     print("======================================================================")
-    print("    Welcome to GTI's Student Certification Processing Application")
+    print(message)
     print("======================================================================")
 
 # Validate string input
@@ -77,7 +77,7 @@ def generateCertificateFile(list):
 
     try:
         with open(filepath, "w") as file:
-            file.write("---------- CERTIFICATION RESULT SHEET  ----------\n")
+            file.write("------------- CERTIFICATION RESULT SHEET ---------------\n")
             file.write("\nCandidate: \t" + name)
             file.write("\nCertification: \t" + cert)
             file.write("\n\nModule\t\t\tResult\tGrade\tOutcome\n")
@@ -89,7 +89,7 @@ def generateCertificateFile(list):
                 file.write("\nOverall Result: PASS")
             else:
                 file.write("\nOverall Result: FAIL*")
-                file.write("\n---------------------------------------------------------\n")
+                file.write("\n----------------------------------------------------------\n")
                 file.write("* Candidates must pass all modules to obtain a certificate.\nThe pass rate for each module is 50%")
     except:
         print("File IO error")
@@ -117,8 +117,8 @@ def generateCertificateSpreadsheet(list):
         
 # Write to log file
 def updateLog(list):
-    name = list[0]
-    cert = list[1]
+    name = list[0].ljust(24)
+    cert = list[1].ljust(40)
     outcome = list[4]
     result = "Fail" if "Fail" in outcome else "Pass"
     filepath = "C:\\temp\\GTI Certification Log.txt"
@@ -126,13 +126,13 @@ def updateLog(list):
     try:
         if not Path(filepath).exists():
             with open(filepath, "w") as file:
-                file.write("Candidate\t\tCertification\t\tResult\n")
-                file.write("================\t===============\t\t==========\n")
-                file.write(name + "\t\t" + cert + "\t\t" + str(result) + "\n")
+                file.write("Candidate".ljust(24) + "Certification".ljust(40) +"Result\n")
+                file.write("==================\t===============================\t==========\n")
+                file.write(name + cert + result + "\n")
         
         else:
             with open(filepath, "a") as file:
-                file.write(name + "\t\t" + cert + "\t\t" + str(result) + "\n")
+                file.write(name + cert + result + "\n")
     except:
         print("Log file IO error")
         
