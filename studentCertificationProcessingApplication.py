@@ -2,6 +2,8 @@
 # Author: Mary Ronan
 # Student Certification Processing Application
 
+import csv
+
 # Global variables
 moduleList = ["System Design", "Web Design", "Programming", "Databases", "Cyber Security"]
 
@@ -28,7 +30,7 @@ def getValidIntInput(message):
     while(True):
         try:
             value = int((input(message)))
-            if value < 0 :
+            if value < 0 or value > 100:
                 raise Exception
             else:
                 return value
@@ -57,17 +59,12 @@ def getOutcome(grade):
     
 # Display Grade
 def displayGrade(list):
-    grade = ""
-    
-    if "Fail" in list[4]:
-        grade = "Fail"
-    else :
-        grade = "Pass"
-    print("\n{0} has achieved a grade of {1} for the certificate: {2}".format(list[0], grade.upper(), list[1]))
+    grade = "FAIL" if "Fail" in list[4] else "PASS"
+    print("\n{0} has achieved a grade of {1} for the certificate: {2}".format(list[0], grade, list[1]))
 
     
 # Generate certificate
-def generateCertificate(list):
+def generateCertificateFile(list):
     name = list[0]
     cert = list[1]
     results = list[2]
@@ -97,9 +94,27 @@ def generateCertificate(list):
         print("File IO error")
     
 
-# Write to log file
-
 # Write to CSV
+def generateCertificateSpreadsheet(list):
+    name = list[0]
+    cert = list[1]
+    results = list[2]
+    filepath = "C:\\temp\\" + name + " " + cert + " Certificate.csv"
+
+    # Generate content
+    spreadsheetList = [name, cert]
+    for i in range(0, len(moduleList)):
+        spreadsheetList.append(moduleList[i])
+        spreadsheetList.append(results[i])
+    
+    try:
+        with open(filepath, "w", newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(spreadsheetList)
+    except:
+        print("CSV File IO error")
+        
+# Write to log file
 
 # Exit prompt
 def exitPrompt():
@@ -160,11 +175,11 @@ def main():
         displayGrade(certificateList)
 
         # Generate certificate
-        generateCertificate(certificateList)
-
-        # Add to log
+        generateCertificateFile(certificateList)
 
         # Add to CSV
+        generateCertificateSpreadsheet(certificateList)
+        # Add to log
 
         # Prompt to exit
         keepGoing = exitPrompt()
