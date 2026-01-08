@@ -8,8 +8,8 @@ from pathlib import Path
 # Global variables
 moduleList = ["System Design", "Web Design", "Programming", "Databases", "Cyber Security"]
 
-# Display greeting
-def displayGreeting():
+# Display message
+def displayMessage(message):
     print("======================================================================")
     print("    Welcome to GTI's Student Certification Processing Application")
     print("======================================================================")
@@ -77,7 +77,7 @@ def generateCertificateFile(list):
 
     try:
         with open(filepath, "w") as file:
-            file.write("---------------------- CERTIFICATION RESULT SHEET  ----------------------\n")
+            file.write("---------- CERTIFICATION RESULT SHEET  ----------\n")
             file.write("\nCandidate: \t" + name)
             file.write("\nCertification: \t" + cert)
             file.write("\n\nModule\t\t\tResult\tGrade\tOutcome\n")
@@ -89,7 +89,7 @@ def generateCertificateFile(list):
                 file.write("\nOverall Result: PASS")
             else:
                 file.write("\nOverall Result: FAIL*")
-                file.write("\n----------------------------------------------------------------------\n")
+                file.write("\n---------------------------------------------------------\n")
                 file.write("* Candidates must pass all modules to obtain a certificate.\nThe pass rate for each module is 50%")
     except:
         print("File IO error")
@@ -153,13 +153,6 @@ def exitPrompt():
             print("Invalid Entry, please enter Y for Yes or N for No")
 
 
-
-# Display exit message
-def displayExitMessage():
-    print("======================================================================")
-    print("Thank you for using GTI's Student Certification Processing Application")
-    print("======================================================================")
-
 def main():
 
     # Local variables
@@ -170,8 +163,8 @@ def main():
     gradeList = [0] * len(moduleList)
     outcomeList = [0] * len(moduleList)
 
-    # Display greeting
-    displayGreeting()
+    # Launch welcome screen
+    displayMessage("    Welcome to GTI's Student Certification Processing Application")
 
     # Get Student Information
     while(keepGoing == True):
@@ -184,7 +177,6 @@ def main():
             resultList[i] = getValidIntInput("Enter result for module '" + moduleList[i] + "': ")
             gradeList[i] = getGrade(resultList[i])
             outcomeList[i] = getOutcome(gradeList[i])
-
         certificateList.append(studentName)
         certificateList.append(certificateName)
         certificateList.append(resultList)
@@ -206,7 +198,7 @@ def main():
         # Prompt to exit
         keepGoing = exitPrompt()
         
-    displayExitMessage()
+    displayMessage("Thank you for using GTI's Student Certification Processing Application")
     
 main()
 
