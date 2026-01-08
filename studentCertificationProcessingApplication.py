@@ -3,6 +3,7 @@
 # Student Certification Processing Application
 
 import csv
+from pathlib import Path
 
 # Global variables
 moduleList = ["System Design", "Web Design", "Programming", "Databases", "Cyber Security"]
@@ -115,13 +116,32 @@ def generateCertificateSpreadsheet(list):
         print("CSV File IO error")
         
 # Write to log file
+def updateLog(list):
+    name = list[0]
+    cert = list[1]
+    outcome = list[4]
+    result = "Fail" if "Fail" in outcome else "Pass"
+    filepath = "C:\\temp\\GTI Certification Log.txt"
 
+    try:
+        if not Path(filepath).exists():
+            with open(filepath, "w") as file:
+                file.write("Candidate\t\tCertification\t\tResult\n")
+                file.write("================\t===============\t\t==========\n")
+                file.write(name + "\t\t" + cert + "\t\t" + str(result) + "\n")
+        
+        else:
+            with open(filepath, "a") as file:
+                file.write(name + "\t\t" + cert + "\t\t" + str(result) + "\n")
+    except:
+        print("Log file IO error")
+        
 # Exit prompt
 def exitPrompt():
     validEntries = ["Y", "y", "N", "n"]
     while(True):
         try:
-            value = input("Enter results for another candidate [Y/N]")
+            value = input("\nEnter results for another candidate [Y/N]")
             if value.strip() == "" or value not in validEntries:
                 raise Exception
             else:
@@ -179,8 +199,10 @@ def main():
 
         # Add to CSV
         generateCertificateSpreadsheet(certificateList)
+        
         # Add to log
-
+        updateLog(certificateList)
+        
         # Prompt to exit
         keepGoing = exitPrompt()
         
