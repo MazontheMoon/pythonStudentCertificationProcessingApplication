@@ -48,13 +48,13 @@ def getGrade(score):
     else:
         return "E"
 
-# Calculate outcome from result
+# Calculate outcome from grade
 def getOutcome(grade):
     if grade == "A" or grade == "B" or grade == "C":
         return "Pass"
     else:
         return "Fail"
-
+    
 # Display Grade
 def displayGrade(list):
     grade = ""
@@ -63,13 +63,40 @@ def displayGrade(list):
         grade = "Fail"
     else :
         grade = "Pass"
-    print("{0} has achieved a grade of {1} for the certificate: {2}".format(list[0], grade.upper(), list[1]))
+    print("\n{0} has achieved a grade of {1} for the certificate: {2}".format(list[0], grade.upper(), list[1]))
 
     
 # Generate certificate
 def generateCertificate(list):
-    print("======================================================================")
+    name = list[0]
+    cert = list[1]
+    results = list[2]
+    grades = list[3]
+    outcome = list[4]
+    average = int(sum(results) / len(results))
+    overallResult = "FAIL" if "Fail" in outcome else "PASS"
+    filepath = "C:\\temp\\" + name + " " + cert + " Certificate.txt"
+
+    try:
+        with open(filepath, "w") as file:
+            file.write("---------------------- CERTIFICATION RESULT SHEET  ----------------------\n")
+            file.write("\nCandidate: \t" + name)
+            file.write("\nCertification: \t" + cert)
+            file.write("\n\nModule\t\t\tResult\tGrade\tOutcome\n")
+            file.write("=================\t======\t=====\t=======\n")
+            for i in range(0, len(moduleList)):
+                file.write(moduleList[i] + "\t\t  " + str(results[i]) + "\t  " + grades[i] + "\t " + outcome[i] +"\n")
+            file.write("\nAverage Result: " + str(average))
+            if overallResult == "PASS":
+                file.write("\nOverall Result: PASS")
+            else:
+                file.write("\nOverall Result: FAIL*")
+                file.write("\n----------------------------------------------------------------------\n")
+                file.write("* Candidates must pass all modules to obtain a certificate.\nThe pass rate for each module is 50%")
+    except:
+        print("File IO error")
     
+
 # Write to log file
 
 # Write to CSV
@@ -79,16 +106,16 @@ def exitPrompt():
     validEntries = ["Y", "y", "N", "n"]
     while(True):
         try:
-            value = input("Enter results for another candidate [Y/N] \n")
-            if value == "" or value not in validEntries:
+            value = input("Enter results for another candidate [Y/N]")
+            if value.strip() == "" or value not in validEntries:
                 raise Exception
             else:
-                if value == "Y" or value == "y":
+                if value.upper() == "Y":
                     return True
                 else:
                     return False
         except:
-            print("Invalid Entry, please enter Y for Yes or N for No\n")
+            print("Invalid Entry, please enter Y for Yes or N for No")
 
 
 
@@ -107,14 +134,14 @@ def main():
     resultList = [0] * len(moduleList)
     gradeList = [0] * len(moduleList)
     outcomeList = [0] * len(moduleList)
-    certificateList = []
 
     # Display greeting
     displayGreeting()
 
     # Get Student Information
     while(keepGoing == True):
-        studentName = getValidStringInput("Enter candidate's name: ")
+        certificateList = []
+        studentName = getValidStringInput("\nEnter candidate's name: ")
         certificateName = getValidStringInput("Enter name of certificate: ")
 
         # Get results per module
@@ -141,12 +168,6 @@ def main():
 
         # Prompt to exit
         keepGoing = exitPrompt()
-
-        # Clear lists
-        resultList.clear()
-        gradeList.clear()
-        outcomeList.clear()
-        certificateList.clear()
         
     displayExitMessage()
     
