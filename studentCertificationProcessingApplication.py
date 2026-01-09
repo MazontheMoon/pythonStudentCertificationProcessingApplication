@@ -10,9 +10,9 @@ moduleList = ["System Design", "Web Design", "Programming", "Databases", "Cyber 
 
 # Display message
 def displayMessage(message):
-    print("======================================================================")
+    print("=".ljust(70, "="))
     print(message)
-    print("======================================================================")
+    print("=".ljust(70, "="))
 
 # Validate string input
 def getValidStringInput(message):
