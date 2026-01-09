@@ -127,7 +127,7 @@ def updateLog(list):
         if not Path(filepath).exists():
             with open(filepath, "w") as file:
                 file.write("Candidate".ljust(24) + "Certification".ljust(40) +"Result\n")
-                file.write("==================\t===============================\t==========\n")
+                file.write("=".ljust(18,"=") + "\t" + "=".ljust(30,"=") + "\t\t==========\n")
                 file.write(name + cert + result + "\n")
         
         else:
