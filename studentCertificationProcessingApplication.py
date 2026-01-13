@@ -1,4 +1,4 @@
-# SD-TA-010-B - Assignment
+    # SD-TA-010-B - Assignment
 # Author: Mary Ronan
 # Student Certification Processing Application
 
@@ -31,7 +31,7 @@ def getValidIntInput(message):
     while(True):
         try:
             value = int((input(message)))
-            if value < 0 or value > 100:
+            if value < 1 or value > 100:
                 raise Exception
             else:
                 return value
@@ -76,7 +76,7 @@ def generateCertificateFile(list):
     filepath = "C:\\temp\\" + name + " " + cert + " Certificate.txt"
 
     try:
-        with open(filepath, "w") as file:
+        with open(filepath.replace(" ", ""), "w") as file:
             file.write("------------- CERTIFICATION RESULT SHEET ---------------\n")
             file.write("\nCandidate: \t" + name)
             file.write("\nCertification: \t" + cert)
@@ -100,7 +100,7 @@ def generateCertificateSpreadsheet(list):
     name = list[0]
     cert = list[1]
     results = list[2]
-    filepath = "C:\\temp\\" + name + " " + cert + " Certificate.csv"
+    filepath = "C:\\temp\\" + name + "" + cert + "Certificate.csv"
 
     # Generate content
     spreadsheetList = [name, cert]
@@ -109,7 +109,7 @@ def generateCertificateSpreadsheet(list):
         spreadsheetList.append(results[i])
     
     try:
-        with open(filepath, "w", newline='') as file:
+        with open(filepath.replace(" ", ""), "w", newline='') as file:
             writer = csv.writer(file)
             writer.writerow(spreadsheetList)
     except:
@@ -121,7 +121,7 @@ def updateLog(list):
     cert = list[1].ljust(40)
     outcome = list[4]
     result = "Fail" if "Fail" in outcome else "Pass"
-    filepath = "C:\\temp\\GTI Certification Log.txt"
+    filepath = "C:\\temp\\GTI_Certification_Log.txt"
 
     try:
         if not Path(filepath).exists():
